@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accounts | Ford Bank</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <h2>Ford<span>Bank</span></h2>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <!-- DYNAMIC -->
+      </ul>
+      <div class="mobile-menu-toggle">Menu</div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Your Accounts</h1>
+      <p>Manage all your Ford Bank accounts in one place.</p>
+    </div>
+  </section>
+
+  <!-- Accounts Grid -->
+  <section class="accounts-section">
+    <div class="container">
+      <div class="account-types">
+        <div class="account-card">
+          <div class="account-icon">Wallet</div>
+          <h3>Checking Account</h3>
+          <p>No monthly fees. Unlimited transactions.</p>
+          <a href="#" id="checkingBtn" class="btn-secondary">View Details</a>
+        </div>
+        <div class="account-card">
+          <div class="account-icon">Piggy Bank</div>
+          <h3>High-Yield Savings</h3>
+          <p>Earn 4.20% APY with no minimums.</p>
+          <a href="#" id="savingsBtn" class="btn-secondary">Open Now</a>
+        </div>
+        <div class="account-card">
+          <div class="account-icon">Lock</div>
+          <h3>Certificates of Deposit</h3>
+          <p>Lock in great rates for guaranteed returns.</p>
+          <a href="#" id="cdsBtn" class="btn-secondary">Explore CDs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features-alt">
+    <div class="container">
+      <h2>Why Bank with Ford?</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <h4>No Hidden Fees</h4>
+          <p>We believe in transparency — no surprises.</p>
+        </div>
+        <div class="feature-item">
+          <h4>24/7 Support</h4>
+          <p>Live help whenever you need it.</p>
+        </div>
+        <div class="feature-item">
+          <h4>Mobile Check Deposit</h4>
+          <p>Deposit checks with a snap.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-col">
+        <div class="footer-logo">
+          <h3>Ford<span>Bank</span></h3>
+          <p>Digital banking. No nonsense.</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="savings.html">Savings Accounts</a></li>
+          <li><a href="accounts.html">Checking Accounts</a></li>
+          <li><a href="investing.html">Certificates of Deposit</a></li>
+          <li><a href="#">Auto Loans</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Investor Relations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:fordbank452@gmail.com">fordbank452@gmail.com</a></p>
+        <div class="social-links"></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2007 Ford Bank. Member FDIC. Equal Housing Lender.</p>
+        <div class="legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="security.html">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5r_nrSgK7lEZdG52tqLZZBh5fnQHz9ew",
+      authDomain: "allybank-478ad.firebaseapp.com",
+      projectId: "allybank-478ad",
+      storageBucket: "allybank-478ad.firebasestorage.app",
+      messagingSenderId: "805352082325",
+      appId: "1:805352082325:web:90cf70bcfd1a057f4f449c",
+      measurementId: "G-GPRQK6L99L"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.getElementById('navLinks');
+      const checkingBtn = document.getElementById('checkingBtn');
+      const savingsBtn = document.getElementById('savingsBtn');
+      const cdsBtn = document.getElementById('cdsBtn');
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // LOGGED IN
+          navLinks.innerHTML = `
+            <li><a href="index.html">Home</a></li>
+            <li><a href="accounts.html" class="active">Accounts</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="investing.html">Investing</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="dashboard.html" class="btn-login">Dashboard</a></li>
+            <li><a href="#" id="logoutBtn" class="btn-login" style="background:#dc2626;">Logout</a></li>
+          `;
+
+          checkingBtn.href = 'dashboard.html';
+          checkingBtn.textContent = 'Go to Dashboard';
+          savingsBtn.href = 'dashboard.html';
+          savingsBtn.textContent = 'Go to Dashboard';
+          cdsBtn.href = 'dashboard.html';
+          cdsBtn.textContent = 'Go to Dashboard';
+
+          document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+              await signOut(auth);
+              window.location.href = 'index.html';
+            } catch (error) {
+              console.error('Logout error:', error);
+              alert('Failed to log out: ' + error.message);
+            }
+          });
+        } else {
+          // NOT LOGGED IN
+          navLinks.innerHTML = `
+            <li><a href="index.html">Home</a></li>
+            <li><a href="accounts.html" class="active">Accounts</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="investing.html">Investing</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="login.html" class="btn-login">Log In</a></li>
+          `;
+
+          checkingBtn.href = 'login.html';
+          savingsBtn.href = 'login.html';
+          cdsBtn.href = 'login.html';
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
